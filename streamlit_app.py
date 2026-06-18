@@ -617,6 +617,7 @@ db={
 
 def go_to(page_name):
     st.session_state.menu = page_name
+    st.rerun()
 
 if "menu" not in st.session_state:
     st.session_state.menu = "🏠 Home"
