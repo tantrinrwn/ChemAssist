@@ -235,8 +235,7 @@ button[data-baseweb="tab"] {
 /* ================= SIDEBAR ================= */
 
 section[data-testid="stSidebar"] {
-
-    background: rgba(255,255,255,0.55);
+    background: var(--sidebar-color);
 
     backdrop-filter: blur(20px);
 
@@ -666,9 +665,10 @@ with st.sidebar:
 
     st.session_state.dark_mode = dark_mode
 
+
     if dark_mode:
-        sidebar_bg = "#0F172A"
-        nav_bg = "#334155"
+        sidebar_bg = "#020617"
+        nav_bg = "#1E293B"
         nav_text = "white"
     else:
         sidebar_bg = "#E0F2FE"
