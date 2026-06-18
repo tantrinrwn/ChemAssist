@@ -232,16 +232,19 @@ button[data-baseweb="tab"] {
     background: #EFF6FF !important;
 }
 
+
 /* ================= SIDEBAR ================= */
 
 section[data-testid="stSidebar"] {
-    background: var(--sidebar-color);
+
+    background: rgba(255,255,255,0.55);
 
     backdrop-filter: blur(20px);
 
     border-right:
         1px solid rgba(255,255,255,0.4);
 }
+
 
 /* ================= CARD ================= */
 
@@ -614,8 +617,6 @@ db={
 
 def go_to(page_name):
     st.session_state.menu = page_name
-    st.rerun()
-
 
 if "menu" not in st.session_state:
     st.session_state.menu = "🏠 Home"
@@ -665,10 +666,9 @@ with st.sidebar:
 
     st.session_state.dark_mode = dark_mode
 
-
     if dark_mode:
-        sidebar_bg = "#0B1120"
-        nav_bg = "#1E293B"
+        sidebar_bg = "#0F172A"
+        nav_bg = "#334155"
         nav_text = "white"
     else:
         sidebar_bg = "#E0F2FE"
@@ -715,7 +715,18 @@ with st.sidebar:
         ],
 
         menu_icon="stars",
+
+        default_index=[
+            "🏠 Home",
+            "💧 Larutan",
+            "⚗️ pH",
+            "📚 Informasi Bahan Kimia",
+            "🧪 Analisis Kimia",
+            "ℹ️ Tentang"
+        ].index(st.session_state.menu),
+
         styles={
+
             "container": {
                 "padding": "15px",
                 "background-color": sidebar_bg,
@@ -744,22 +755,10 @@ with st.sidebar:
                 "color": "white",
                 "font-weight": "bold",
             },
-        },
-
-        default_index=[
-            "🏠 Home",
-            "💧 Larutan",
-            "⚗️ pH",
-            "📚 Informasi Bahan Kimia",
-            "🧪 Analisis Kimia",
-            "ℹ️ Tentang"
-        ].index(st.session_state.menu),
-        key="sidebar_menu"
+        }
     )
+    st.session_state.menu = selected
 
-    if selected != st.session_state.menu:
-        st.session_state.menu = selected
-        
     st.markdown("---")
 
     if st.button("🚪 Logout"):
@@ -775,20 +774,6 @@ if dark_mode:
 
     st.markdown("""
     <style>
-
-    /* ===== SIDEBAR FULL DARK ===== */
-
-    section[data-testid="stSidebar"]{
-        background:#0B1120 !important;
-    }
-
-    section[data-testid="stSidebar"] > div{
-        background:#0B1120 !important;
-    }
-
-    [data-testid="stSidebarContent"]{
-        background:#0B1120 !important;
-    }
 
     /* ================= BACKGROUND ================= */
 
@@ -808,10 +793,6 @@ if dark_mode:
     }
 
     section[data-testid="stSidebar"] > div{
-        background:#0F172A !important;
-    }
-
-    [data-testid="stSidebarContent"]{
         background:#0F172A !important;
     }
 
@@ -964,74 +945,6 @@ if dark_mode:
     [data-testid="stMetric"] *{
         color:white !important;
     }
-
-    /* ===== CONTAINER UTAMA ===== */
-
-    [data-testid="stVerticalBlock"]{
-        color:white !important;
-    }
-
-    /* ===== INFO SUCCESS WARNING ERROR ===== */
-
-    [data-testid="stAlert"]{
-        background:#1E293B !important;
-        color:white !important;
-        border:1px solid #334155 !important;
-    }
-
-    /* ===== TABS ===== */
-    
-    .stTabs{
-        background:#0F172A !important;
-        border:1px solid #334155 !important;
-    }
-
-    button[data-baseweb="tab"]{
-        color:white !important;
-    }
-
-    /* ===== EXPANDER ===== */
-
-    .streamlit-expanderHeader{
-        background:#1E293B !important;
-        color:white !important;
-    }
-
-    /* ===== SELECTBOX DROPDOWN ===== */
-
-    ul[role="listbox"]{
-        background:#1E293B !important;
-    }
-
-    ul[role="listbox"] li{
-        color:white !important;
-    }
-
-    /* ===== NUMBER INPUT ===== */
-
-    .stNumberInput input{
-        background:#1E293B !important;
-        color:white !important;
-    }
-
-    /* ===== MARKDOWN ===== */
-
-    .stMarkdown{
-        color:white !important;
-    }
-    [data-testid="stVerticalBlock"]{
-        color:white !important;
-    }
-
-    [data-testid="stAlert"]{
-        background:#1E293B !important;
-        color:white !important;
-    }
-
-    .stTabs{
-        background:#0F172A !important;
-    }
-
     </style>
     """, unsafe_allow_html=True)
 
@@ -1046,7 +959,6 @@ else:
 
 
 menu = st.session_state.menu
-
 # ================= HOME =================
 
 if menu == "🏠 Home":
@@ -1095,10 +1007,9 @@ if menu == "🏠 Home":
     with col1:
 
         if st.button("💧 Buka Menu Larutan", use_container_width=True):
-            st.session_state.menu = "💧 Larutan"
-            st.rerun()
-            
-        st.markdown(f"""
+            go_to("💧 Larutan")
+
+        st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
             height:190px;
@@ -1117,7 +1028,7 @@ if menu == "🏠 Home":
 
         if st.button("📚 Informasi Kimia", use_container_width=True):
             go_to("📚 Informasi Bahan Kimia")
-            
+
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
@@ -1159,7 +1070,7 @@ if menu == "🏠 Home":
 
         if st.button("🧪 Analisis Kimia", use_container_width=True):
             go_to("🧪 Analisis Kimia")
-            
+
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
