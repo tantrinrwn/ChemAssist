@@ -232,16 +232,19 @@ button[data-baseweb="tab"] {
     background: #EFF6FF !important;
 }
 
+
 /* ================= SIDEBAR ================= */
 
 section[data-testid="stSidebar"] {
-    background: var(--sidebar-color);
+
+    background: rgba(255,255,255,0.55);
 
     backdrop-filter: blur(20px);
 
     border-right:
         1px solid rgba(255,255,255,0.4);
 }
+
 
 /* ================= CARD ================= */
 
@@ -614,8 +617,6 @@ db={
 
 def go_to(page_name):
     st.session_state.menu = page_name
-    st.rerun()
-
 
 if "menu" not in st.session_state:
     st.session_state.menu = "🏠 Home"
@@ -641,14 +642,11 @@ Sistem Analisis Parameter Laboratorium Kimia Interaktif
 
 with st.sidebar:
 
-
     if st.session_state.login:
-        pass
-# if st.session_state.login:
-#     st.success(
-#         f"👤 {st.session_state.nama}"
-#     )
-    
+        st.success(
+            f"👤 {st.session_state.nama}"
+        )
+        
     users = load_users()
 
     if st.session_state.username in users:
@@ -668,9 +666,8 @@ with st.sidebar:
 
     st.session_state.dark_mode = dark_mode
 
-
     if dark_mode:
-        sidebar_bg = "#0B1120"
+        sidebar_bg = "#0F172A"
         nav_bg = "#1E293B"
         nav_text = "white"
     else:
@@ -678,30 +675,8 @@ with st.sidebar:
         nav_bg = "#FFFFFF"
         nav_text = "#0F172A"
 
-
-    if dark_mode:
-        title_color = "white"
-    else:
-        title_color = "#0F172A"
-
-
-    st.markdown(f"""
-    <div style="
-    background:{sidebar_bg};
-    padding:12px;
-    border-radius:15px;
-    text-align:center;
-    font-size:26px;
-    font-weight:800;
-    color:{title_color};
-    margin-bottom:15px;
-    ">
-    ✨ ChemAssist
-    </div>
-    """, unsafe_allow_html=True)
-    
     selected = option_menu(
-        menu_title=None,
+        menu_title="✨ ChemAssist Menu",
 
         options=[
             "🏠 Home",
@@ -722,38 +697,6 @@ with st.sidebar:
         ],
 
         menu_icon="stars",
-        styles={
-
-            "container": {
-                "padding": "15px",
-                "background-color": "#0B1120" if dark_mode else "#E0F2FE",
-                "border-radius": "20px",
-            },
-
-            "icon": {
-                "color": "#38BDF8",
-                "font-size": "20px"
-            },
-
-
-            "nav-link": {
-                "font-size": "17px",
-                "text-align": "left",
-                "margin": "8px",
-                "padding": "12px",
-                "border-radius": "14px",
-                "background-color": "#1E293B" if dark_mode else "#FFFFFF",
-                "color": "#FFFFFF" if dark_mode else "#0F172A",
-                "font-weight": "600",
-                "--hover-color": "#334155",
-            },
-
-            "nav-link-selected": {
-                "background": "linear-gradient(90deg,#38BDF8,#2563EB)",
-                "color": "white",
-                "font-weight": "bold",
-            },
-        },
 
         default_index=[
             "🏠 Home",
@@ -763,12 +706,41 @@ with st.sidebar:
             "🧪 Analisis Kimia",
             "ℹ️ Tentang"
         ].index(st.session_state.menu),
-        key="sidebar_menu"
-    )
 
-    if selected != st.session_state.menu:
-        st.session_state.menu = selected
-        
+        styles={
+
+            "container": {
+                "padding": "15px",
+                "background-color": sidebar_bg,
+                "border-radius": "20px",
+            },
+
+            "icon": {
+                "color": "#38BDF8",
+                "font-size": "20px"
+            },
+
+            "nav-link": {
+                "font-size": "17px",
+                "text-align": "left",
+                "margin": "8px",
+                "padding": "12px",
+                "border-radius": "14px",
+                "background-color": nav_bg,
+                "color": nav_text,
+                "font-weight": "600",
+                "--hover-color": "#334155",
+            },
+
+            "nav-link-selected": {
+                "background": "linear-gradient(90deg,#38BDF8,#2563EB)",
+                "color": "white",
+                "font-weight": "bold",
+            },
+        }
+    )
+    st.session_state.menu = selected
+
     st.markdown("---")
 
     if st.button("🚪 Logout"):
@@ -777,27 +749,13 @@ with st.sidebar:
         st.session_state.nama = ""
         st.rerun()
 
-menu = st.session_state.menu
+menu = selected
 # ================= DARK MODE =================
 
 if dark_mode:
 
     st.markdown("""
     <style>
-
-    /* ===== SIDEBAR FULL DARK ===== */
-
-    section[data-testid="stSidebar"]{
-        background:#0B1120 !important;
-    }
-
-    section[data-testid="stSidebar"] > div{
-        background:#0B1120 !important;
-    }
-
-    [data-testid="stSidebarContent"]{
-        background:#0B1120 !important;
-    }
 
     /* ================= BACKGROUND ================= */
 
@@ -820,10 +778,6 @@ if dark_mode:
         background:#0F172A !important;
     }
 
-    [data-testid="stSidebarContent"]{
-        background:#0F172A !important;
-    }
-
     section[data-testid="stSidebar"] *{
         color:white !important;
     }
@@ -836,10 +790,6 @@ if dark_mode:
     section[data-testid="stSidebar"] h4,
     section[data-testid="stSidebar"] p,
     section[data-testid="stSidebar"] span{
-        color:white !important;
-    }
-
-    .st-emotion-cache-16txtl3{
         color:white !important;
     }
 
@@ -919,12 +869,7 @@ if dark_mode:
     .stSelectbox div[data-baseweb="select"] *{
         color:white !important;
     }
-    
-    div[data-baseweb="select"] > div{
-        background-color:#1E293B !important;
-        color:white !important;
-        border:1px solid #334155 !important;
-    }
+
     /* ================= TEXT ================= */
 
     h1,h2,h3,h4,h5,h6{
@@ -973,97 +918,11 @@ if dark_mode:
     [data-testid="stMetric"] *{
         color:white !important;
     }
-
-    /* ===== CONTAINER UTAMA ===== */
-
-    [data-testid="stVerticalBlock"]{
-        color:white !important;
-    }
-
-    /* ===== INFO SUCCESS WARNING ERROR ===== */
-
-    [data-testid="stAlert"]{
-        background:#1E293B !important;
-        color:white !important;
-        border:1px solid #334155 !important;
-    }
-
-    /* ===== TABS ===== */
-    
-    .stTabs{
-        background:#0F172A !important;
-        border:1px solid #334155 !important;
-    }
-
-    button[data-baseweb="tab"]{
-        color:white !important;
-    }
-
-    /* ===== EXPANDER ===== */
-
-    .streamlit-expanderHeader{
-        background:#1E293B !important;
-        color:white !important;
-    }
-
-    /* ===== SELECTBOX DROPDOWN ===== */
-
-    ul[role="listbox"]{
-        background:#1E293B !important;
-    }
-
-    ul[role="listbox"] li{
-        color:white !important;
-    }
-
-    /* ===== NUMBER INPUT ===== */
-
-    .stNumberInput input{
-        background:#1E293B !important;
-        color:white !important;
-    }
-
-    /* ===== MARKDOWN ===== */
-
-    .stMarkdown{
-        color:white !important;
-    }
-    [data-testid="stVerticalBlock"]{
-        color:white !important;
-    }
-
-    [data-testid="stAlert"]{
-        background:#1E293B !important;
-        color:white !important;
-    }
-
-    .stTabs{
-        background:#0F172A !important;
-    }
-
-    .nav-link span{
-        color:white !important;
-    }
-
-    .nav-link-selected span{
-        color:white !important;
-    }
-    
     </style>
     """, unsafe_allow_html=True)
 
-if dark_mode:
-    CARD_BG = "#1E293B"
-    CARD_TEXT = "white"
-    CARD_BORDER = "#334155"
-else:
-    CARD_BG = "#F8FAFC"
-    CARD_TEXT = "#0F172A"
-    CARD_BORDER = "#E2E8F0"
-
 
 menu = st.session_state.menu
-
 # ================= HOME =================
 
 if menu == "🏠 Home":
@@ -1112,10 +971,9 @@ if menu == "🏠 Home":
     with col1:
 
         if st.button("💧 Buka Menu Larutan", use_container_width=True):
-            st.session_state.menu = "💧 Larutan"
-            st.rerun()
-            
-        st.markdown(f"""
+            go_to("💧 Larutan")
+
+        st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
             height:190px;
@@ -1134,7 +992,7 @@ if menu == "🏠 Home":
 
         if st.button("📚 Informasi Kimia", use_container_width=True):
             go_to("📚 Informasi Bahan Kimia")
-            
+
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
@@ -1176,7 +1034,7 @@ if menu == "🏠 Home":
 
         if st.button("🧪 Analisis Kimia", use_container_width=True):
             go_to("🧪 Analisis Kimia")
-            
+
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
@@ -1576,13 +1434,13 @@ elif menu == "📚 Informasi Bahan Kimia":
 
         st.markdown(f"""
         <div style="
-            background:{CARD_BG};
+            background:#F8FAFC;
             padding:22px;
             border-radius:16px;
-            color:{CARD_TEXT};
+            color:#0F172A;
             box-shadow:0 8px 20px rgba(0,0,0,0.12);
             line-height:1.7;
-            border:1px solid {CARD_BORDER};
+            border:1px solid #E2E8F0;
         ">
 
         <h3 style="
@@ -1644,13 +1502,11 @@ elif st.session_state.menu == "🧪 Analisis Kimia":
                 key="btn_analisis",
                 use_container_width=True
             )
-            
+
     if tampilkan_analisis:
-        st.session_state.analisis_selesai = True
-        st.rerun()
 
-    if st.session_state.analisis_selesai:
-
+        st.session_state.analisis_selesai = True        
+        
         data = db[senyawa]
         jenis = data[1]
 
