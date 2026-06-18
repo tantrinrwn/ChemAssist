@@ -513,9 +513,6 @@ if not st.session_state.login:
 if "direct_menu" not in st.session_state:
     st.session_state["direct_menu"] = "🏠 Home"
 
-if "analisis_selesai" not in st.session_state:
-    st.session_state.analisis_selesai = False
-
 # ================= DATA PH =================
 
 data_ph={
@@ -659,89 +656,89 @@ with st.sidebar:
     if "dark_mode" not in st.session_state:
         st.session_state.dark_mode = False
 
-    dark_mode = st.toggle(
-         "🌙 Dark Mode",
-        value=st.session_state.dark_mode
-     )
+        dark_mode = st.toggle(
+            "🌙 Dark Mode",
+            value=st.session_state.dark_mode
+          )
 
-    st.session_state.dark_mode = dark_mode
+        st.session_state.dark_mode = dark_mode
 
-    if dark_mode:
-        sidebar_bg = "#0F172A"
-        nav_bg = "#1E293B"
-        nav_text = "white"
-    else:
-        sidebar_bg = "#E0F2FE"
-        nav_bg = "#FFFFFF"
-        nav_text = "#0F172A"
+        if dark_mode:
+            sidebar_bg = "#0F172A"
+            nav_bg = "#1E293B"
+            nav_text = "white"
+        else:
+            sidebar_bg = "#E0F2FE"
+            nav_bg = "#FFFFFF"
+            nav_text = "#0F172A"
 
-    selected = option_menu(
-        menu_title="✨ ChemAssist Menu",
+        selected = option_menu(
+            menu_title="✨ ChemAssist Menu",
 
-        options=[
-            "🏠 Home",
-            "💧 Larutan",
-            "⚗️ pH",
-            "📚 Informasi Bahan Kimia",
-            "🧪 Analisis Kimia",
-            "ℹ️ Tentang"
-        ],
+            options=[
+                "🏠 Home",
+                "💧 Larutan",
+                "⚗️ pH",
+                "📚 Informasi Bahan Kimia",
+                "🧪 Analisis Kimia",
+                "ℹ️ Tentang"
+            ],
 
-        icons=[
-            "house-fill",
-            "droplet-fill",
-            "eyedropper",
-            "book-fill",
-            "activity",
-            "info-circle-fill"
-        ],
+            icons=[
+                "house-fill",
+                "droplet-fill",
+                "eyedropper",
+                "book-fill",
+                "activity",
+                "info-circle-fill"
+            ],
 
-        menu_icon="stars",
+            menu_icon="stars",
 
-        default_index=[
-            "🏠 Home",
-            "💧 Larutan",
-            "⚗️ pH",
-            "📚 Informasi Bahan Kimia",
-            "🧪 Analisis Kimia",
-            "ℹ️ Tentang"
-        ].index(st.session_state.menu),
+            default_index=[
+                "🏠 Home",
+                "💧 Larutan",
+                "⚗️ pH",
+                "📚 Informasi Bahan Kimia",
+                "🧪 Analisis Kimia",
+                "ℹ️ Tentang"
+            ].index(st.session_state.menu),
 
-        styles={
+            styles={
 
-            "container": {
-                "padding": "15px",
-                "background-color": sidebar_bg,
-                "border-radius": "20px",
-            },
+                "container": {
+                    "padding": "15px",
+                    "background-color": sidebar_bg,
+                    "border-radius": "20px",
+                },
 
-            "icon": {
-                "color": "#38BDF8",
-                "font-size": "20px"
-            },
+                "icon": {
+                    "color": "#38BDF8",
+                    "font-size": "20px"
+                },
 
-            "nav-link": {
-                "font-size": "17px",
-                "text-align": "left",
-                "margin": "8px",
-                "padding": "12px",
-                "border-radius": "14px",
-                "background-color": nav_bg,
-                "color": nav_text,
-                "font-weight": "600",
-                "--hover-color": "#334155",
-            },
+                "nav-link": {
+                    "font-size": "17px",
+                    "text-align": "left",
+                    "margin": "8px",
+                    "padding": "12px",
+                    "border-radius": "14px",
+                    "background-color": nav_bg,
+                    "color": nav_text,
+                    "font-weight": "600",
+                    "--hover-color": "#334155",
+                },
 
-            "nav-link-selected": {
-                "background": "linear-gradient(90deg,#38BDF8,#2563EB)",
-                "color": "white",
-                "font-weight": "bold",
-            },
-        }
-    )
-    st.session_state.menu = selected
+                "nav-link-selected": {
+                    "background": "linear-gradient(90deg,#38BDF8,#2563EB)",
+                    "color": "white",
+                    "font-weight": "bold",
+                },
+            }
+        )
+        st.session_state.menu = selected
 
-    st.markdown("---")
+        st.markdown("---")
 
     if st.button("🚪 Logout"):
         st.session_state.login = False
@@ -749,13 +746,32 @@ with st.sidebar:
         st.session_state.nama = ""
         st.rerun()
 
-menu = selected
+# ================= ROUTING (INI DI LUAR SIDEBAR) =================
+
+if st.session_state.menu == "🏠 Home":
+    home()
+
+elif st.session_state.menu == "💧 Larutan":
+    larutan()
+
+elif st.session_state.menu == "⚗️ pH":
+    ph()
+
+elif st.session_state.menu == "📚 Informasi Bahan Kimia":
+    info()
+
+elif st.session_state.menu == "🧪 Analisis Kimia":
+    analisis()
+
+elif st.session_state.menu == "ℹ️ Tentang":
+    tentang()
+    
 # ================= DARK MODE =================
 
-if dark_mode:
+    if dark_mode:
 
-    st.markdown("""
-    <style>
+        st.markdown("""
+        <style>
 
     /* ================= BACKGROUND ================= */
 
@@ -869,6 +885,9 @@ if dark_mode:
     .stSelectbox div[data-baseweb="select"] *{
         color:white !important;
     }
+    .stSelectbox div[data-baseweb="select"] *{
+        color:black !important;
+    }
 
     /* ================= TEXT ================= */
 
@@ -921,8 +940,8 @@ if dark_mode:
     </style>
     """, unsafe_allow_html=True)
 
-
-menu = st.session_state.menu
+    menu = selected
+    
 # ================= HOME =================
 
 if menu == "🏠 Home":
@@ -1466,14 +1485,12 @@ elif menu == "📚 Informasi Bahan Kimia":
     # ================= NAVIGATION =================
     if home_btn:
         st.session_state.menu = "🏠 Home"
-        st.rerun()
         
 # ================= ANALISIS KIMIA =================
 
-elif st.session_state.menu == "🧪 Analisis Kimia":
+elif menu == "🧪 Analisis Kimia":
 
     st.title("🧪 Smart Chemical Analysis")
-    st.write("STATUS:", st.session_state.analisis_selesai)
 
     senyawa = st.selectbox(
         "Pilih Senyawa",
@@ -1482,32 +1499,14 @@ elif st.session_state.menu == "🧪 Analisis Kimia":
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    tampilkan_analisis = False
-
-    if not st.session_state.analisis_selesai:
-
-        col1, col2 = st.columns(2)
-
-        with col1:
-            if st.button(
-                "⬅️ Kembali ke Home",
-                key="btn_home_analisis",
-                use_container_width=True
-            ):
-                st.session_state.menu = "🏠 Home"
-                st.rerun()
-
-        with col2:
-            tampilkan_analisis = st.button(
-                "🧪 Analisis Senyawa",
-                key="btn_analisis",
-                use_container_width=True
-            )
+    tampilkan_analisis = st.button(
+        "🧪 Analisis Senyawa",
+        key="btn_analisis",
+        use_container_width=True
+    )
 
     if tampilkan_analisis:
 
-        st.session_state.analisis_selesai = True        
-        
         data = db[senyawa]
         jenis = data[1]
 
@@ -2028,15 +2027,10 @@ bahaya {data[3].lower()}.
 
         st.markdown("<br>", unsafe_allow_html=True)
 
-        if st.session_state.analisis_selesai:
+        if st.button("⬅️ Kembali ke Home", key="home_analisis"):
+            st.session_state.menu = "🏠 Home"
+            st.rerun()
 
-            if st.button("⬅️ Kembali ke Home", key="home_analisis"):
-
-                st.session_state.analisis_selesai = False
-                st.session_state.menu = "🏠 Home"
-
-                st.rerun()
-    
 # ================= TENTANG =================
 
 if menu == "ℹ️ Tentang":
