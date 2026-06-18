@@ -758,7 +758,9 @@ with st.sidebar:
             },
         }
     )
-    st.session_state.menu = selected
+    if selected != st.session_state.menu:
+        st.session_state.menu = selected
+        st.rerun()
 
     st.markdown("---")
 
