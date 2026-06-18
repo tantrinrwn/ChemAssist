@@ -617,8 +617,6 @@ db={
 
 def go_to(page_name):
     st.session_state.menu = page_name
-    st.rerun()
-
 
 if "menu" not in st.session_state:
     st.session_state.menu = "🏠 Home"
@@ -717,7 +715,18 @@ with st.sidebar:
         ],
 
         menu_icon="stars",
+
+        default_index=[
+            "🏠 Home",
+            "💧 Larutan",
+            "⚗️ pH",
+            "📚 Informasi Bahan Kimia",
+            "🧪 Analisis Kimia",
+            "ℹ️ Tentang"
+        ].index(st.session_state.menu),
+
         styles={
+
             "container": {
                 "padding": "15px",
                 "background-color": sidebar_bg,
@@ -746,8 +755,7 @@ with st.sidebar:
                 "color": "white",
                 "font-weight": "bold",
             },
-        },
-        key="sidebar_menu"
+        }
     )
     st.session_state.menu = selected
 
@@ -999,9 +1007,8 @@ if menu == "🏠 Home":
     with col1:
 
         if st.button("💧 Buka Menu Larutan", use_container_width=True):
-            st.session_state.menu = "💧 Larutan"
-            st.rerun()
-            
+            go_to("💧 Larutan")
+
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
@@ -1020,8 +1027,8 @@ if menu == "🏠 Home":
         """, unsafe_allow_html=True)
 
         if st.button("📚 Informasi Kimia", use_container_width=True):
-            go_to("📚 Informasi Kimia")
-            
+            go_to("📚 Informasi Bahan Kimia")
+
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
@@ -1063,7 +1070,7 @@ if menu == "🏠 Home":
 
         if st.button("🧪 Analisis Kimia", use_container_width=True):
             go_to("🧪 Analisis Kimia")
-            
+
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
