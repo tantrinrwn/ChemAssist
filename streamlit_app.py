@@ -232,7 +232,6 @@ button[data-baseweb="tab"] {
     background: #EFF6FF !important;
 }
 
-
 /* ================= SIDEBAR ================= */
 
 section[data-testid="stSidebar"] {
@@ -244,7 +243,6 @@ section[data-testid="stSidebar"] {
     border-right:
         1px solid rgba(255,255,255,0.4);
 }
-
 
 /* ================= CARD ================= */
 
@@ -617,6 +615,8 @@ db={
 
 def go_to(page_name):
     st.session_state.menu = page_name
+    st.rerun()
+
 
 if "menu" not in st.session_state:
     st.session_state.menu = "🏠 Home"
@@ -715,8 +715,6 @@ with st.sidebar:
         ],
 
         menu_icon="stars",
-
-       
         styles={
             "container": {
                 "padding": "15px",
@@ -746,11 +744,22 @@ with st.sidebar:
                 "color": "white",
                 "font-weight": "bold",
             },
-        }
+        },
+
+        default_index=[
+            "🏠 Home",
+            "💧 Larutan",
+            "⚗️ pH",
+            "📚 Informasi Bahan Kimia",
+            "🧪 Analisis Kimia",
+            "ℹ️ Tentang"
+        ].index(st.session_state.menu),
         key="sidebar_menu"
     )
-    st.session_state.menu = selected
 
+    if selected != st.session_state.menu:
+        st.session_state.menu = selected
+        
     st.markdown("---")
 
     if st.button("🚪 Logout"):
@@ -785,6 +794,10 @@ if dark_mode:
     }
 
     section[data-testid="stSidebar"] > div{
+        background:#0F172A !important;
+    }
+
+    [data-testid="stSidebarContent"]{
         background:#0F172A !important;
     }
 
@@ -999,8 +1012,9 @@ if menu == "🏠 Home":
     with col1:
 
         if st.button("💧 Buka Menu Larutan", use_container_width=True):
-            go_to("💧 Larutan")
-
+            st.session_state.menu = "💧 Larutan"
+            st.rerun()
+            
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
@@ -1020,7 +1034,7 @@ if menu == "🏠 Home":
 
         if st.button("📚 Informasi Kimia", use_container_width=True):
             go_to("📚 Informasi Bahan Kimia")
-
+            
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
@@ -1062,7 +1076,7 @@ if menu == "🏠 Home":
 
         if st.button("🧪 Analisis Kimia", use_container_width=True):
             go_to("🧪 Analisis Kimia")
-
+            
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
