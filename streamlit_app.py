@@ -668,15 +668,25 @@ with st.sidebar:
 
     if dark_mode:
         sidebar_bg = "#0F172A"
-        nav_bg = "#1E293B"
+        nav_bg = "#334155"
         nav_text = "white"
     else:
         sidebar_bg = "#E0F2FE"
         nav_bg = "#FFFFFF"
         nav_text = "#0F172A"
 
+    st.markdown("""
+    <h2 style='
+    color:white;
+    text-align:center;
+    margin-bottom:15px;
+    '>
+    ✨ ChemAssist
+    </h2>
+    """, unsafe_allow_html=True)
+    
     selected = option_menu(
-        menu_title="✨ ChemAssist Menu",
+        menu_title=None,
 
         options=[
             "🏠 Home",
@@ -793,6 +803,10 @@ if dark_mode:
         color:white !important;
     }
 
+    .st-emotion-cache-16txtl3{
+        color:white !important;
+    }
+
     /* ================= CARD ================= */
 
     .card{
@@ -869,7 +883,12 @@ if dark_mode:
     .stSelectbox div[data-baseweb="select"] *{
         color:white !important;
     }
-
+    
+    div[data-baseweb="select"] > div{
+        background-color:#1E293B !important;
+        color:white !important;
+        border:1px solid #334155 !important;
+    }
     /* ================= TEXT ================= */
 
     h1,h2,h3,h4,h5,h6{
@@ -920,6 +939,15 @@ if dark_mode:
     }
     </style>
     """, unsafe_allow_html=True)
+
+if dark_mode:
+    CARD_BG = "#1E293B"
+    CARD_TEXT = "white"
+    CARD_BORDER = "#334155"
+else:
+    CARD_BG = "#F8FAFC"
+    CARD_TEXT = "#0F172A"
+    CARD_BORDER = "#E2E8F0"
 
 
 menu = st.session_state.menu
@@ -1434,13 +1462,13 @@ elif menu == "📚 Informasi Bahan Kimia":
 
         st.markdown(f"""
         <div style="
-            background:#F8FAFC;
+            background:{CARD_BG};
             padding:22px;
             border-radius:16px;
-            color:#0F172A;
+            color:{CARD_TEXT};
             box-shadow:0 8px 20px rgba(0,0,0,0.12);
             line-height:1.7;
-            border:1px solid #E2E8F0;
+            border:1px solid {CARD_BORDER};
         ">
 
         <h3 style="
@@ -1505,9 +1533,9 @@ elif st.session_state.menu == "🧪 Analisis Kimia":
             
     if tampilkan_analisis:
         st.session_state.analisis_selesai = True
+        st.rerun()
 
     if st.session_state.analisis_selesai:
-        st.success("ANALISIS SELESAI = TRUE")
 
         data = db[senyawa]
         jenis = data[1]
