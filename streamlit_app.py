@@ -667,7 +667,7 @@ with st.sidebar:
 
 
     if dark_mode:
-        sidebar_bg = "#020617"
+        sidebar_bg = "#0B1120"
         nav_bg = "#1E293B"
         nav_text = "white"
     else:
@@ -775,6 +775,20 @@ if dark_mode:
 
     st.markdown("""
     <style>
+
+    /* ===== SIDEBAR FULL DARK ===== */
+
+    section[data-testid="stSidebar"]{
+        background:#0B1120 !important;
+    }
+
+    section[data-testid="stSidebar"] > div{
+        background:#0B1120 !important;
+    }
+
+    [data-testid="stSidebarContent"]{
+        background:#0B1120 !important;
+    }
 
     /* ================= BACKGROUND ================= */
 
@@ -1033,10 +1047,6 @@ else:
 
 menu = st.session_state.menu
 
-if dark_mode:
-    home_card_bg = "linear-gradient(135deg,#1E293B,#334155)"
-else:
-    home_card_bg = "linear-gradient(135deg,#60A5FA,#2563EB)"
 # ================= HOME =================
 
 if menu == "🏠 Home":
@@ -1090,7 +1100,7 @@ if menu == "🏠 Home":
             
         st.markdown(f"""
         <div style="
-            background:{home_card_bg};
+            background:linear-gradient(135deg,#60A5FA,#2563EB);
             height:190px;
             padding:25px;
             border-radius:20px;
